@@ -1,7 +1,7 @@
 Gazerbeam
 =========
 
-Work in progress; there's nothing here yet.
+Work in progress; there's nothing that works here, yet.
 
 This project aims to be a realtime, perhaps interactive, visualization of
 Python program flow. We'll see how that turns out.
