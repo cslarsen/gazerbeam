@@ -3,30 +3,45 @@ import random
 
 import gazerbeam.ipc
 
+import numpy as np
+
 import vispy
 import vispy.app
-import vispy.gloo
+import vispy.color
+import vispy.scene
 
-class Canvas(vispy.app.Canvas):
+
+class Canvas(object):
     def __init__(self):
-        vispy.app.Canvas.__init__(self,
-                title="Gazerbeam",
-                keys="interactive",
-                size=(1200, 800),
-                vsync=True,
-                resizable=True)
-        vispy.gloo.set_clear_color((0, 36.0/255.0, 51.0/255.0))
+        self.scene = vispy.scene.SceneCanvas(
+                        title="Gazerbeam",
+                        keys="interactive",
+                        show=True,
+                        size=(1200, 800),
+                        vsync=True,
+                        resizable=True)
+
+        self.view = self.scene.central_widget.add_view()
+        self.view.camera = 'panzoom'
+        self.view.camera.aspect = 1
+
+        self.nodes = np.array([[0,0,0]])
+        self.markers = vispy.scene.Markers(
+                pos=self.nodes,
+                symbol='o',
+                parent=self.view.scene)
+
+        self.view.camera.set_range()
 
         self.received = []
-        self.timer = vispy.app.Timer("auto", connect=self.update, start=True)
-        self.show()
+        self.timer = vispy.app.Timer("auto", connect=self._check_queue, start=True)
 
-    def update(self, event=None):
-        vispy.app.Canvas.update(self, event)
+    #def update(self, event=None):
+        #vispy.app.Canvas.update(self, event)
 
-        self._check_queue()
+        #self._check_queue()
 
-    def _check_queue(self):
+    def _check_queue(self, event=None):
         obj = gazerbeam.ipc.Queue.receive()
 
         if obj is not None:
@@ -44,11 +59,7 @@ class Canvas(vispy.app.Canvas):
 
     def on_draw(self, event):
         # Just flash the screen for now
-        vispy.gloo.set_clear_color((
-            random.randint(0,255)/255.0,
-            random.randint(0,255)/255.0,
-            random.randint(0,255)/255.0,))
-        vispy.gloo.clear(color=True)
+        pass
 
     def run(self):
         try:
