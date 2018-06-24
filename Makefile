@@ -9,6 +9,9 @@ default: test
 test:
 	$(PYTHON) setup.py test
 
+test-viewer:
+	PYTHONPATH=. $(PYTHON3) tests/test_viewer.py
+
 check: test
 
 run:
