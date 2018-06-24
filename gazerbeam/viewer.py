@@ -42,14 +42,10 @@ class Canvas(object):
         self.view.camera.set_range()
 
         self.received = []
-        self.timer = vispy.app.Timer("auto", connect=self._check_queue, start=True)
+        self.timer = vispy.app.Timer(interval="auto",
+                                     connect=self._poll_queue, start=True)
 
-    #def update(self, event=None):
-        #vispy.app.Canvas.update(self, event)
-
-        #self._check_queue()
-
-    def _check_queue(self, event=None):
+    def _poll_queue(self, event=None):
         obj = gazerbeam.ipc.Queue.receive()
 
         if obj is not None:
@@ -65,17 +61,7 @@ class Canvas(object):
                 gazerbeam.ipc.Queue.queue.join_thread()
                 vispy.app.quit()
 
-    def on_draw(self, event):
-        # Just flash the screen for now
-        pass
-
-    def run(self):
-        try:
-            vispy.app.run()
-        except KeyboardInterrupt:
-            vispy.app.quit()
-
 
 def start():
     canvas = Canvas()
-    canvas.run() # blocks
+    vispy.app.run() # blocks
