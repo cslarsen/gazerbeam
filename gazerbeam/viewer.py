@@ -25,10 +25,18 @@ class Canvas(object):
         self.view.camera = 'panzoom'
         self.view.camera.aspect = 1
 
-        self.nodes = np.array([[0,0,0]])
+        self.pos = np.array([[0,0,0]])
+
         self.markers = vispy.scene.Markers(
-                pos=self.nodes,
+                pos=self.pos,
                 symbol='o',
+                parent=self.view.scene)
+
+        self.labels = vispy.scene.Text(
+                pos=self.pos - [0, 0.0025, 0],
+                color=vispy.color.Color([1,1,1]),
+                anchor_y="top",
+                text="Howdy",
                 parent=self.view.scene)
 
         self.view.camera.set_range()

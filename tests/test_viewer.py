@@ -25,9 +25,9 @@ if __name__ == "__main__":
             else:
                 time.sleep(0.01)
 
-            if count >= 5:
-                gazerbeam.stop_viewer()
-                break
+            #if count >= 5:
+                #gazerbeam.stop_viewer()
+                #break
     except KeyboardInterrupt:
         queue.send("STOP")
         # The STOP signal is never handled, we just kill it off here.
