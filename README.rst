@@ -19,8 +19,16 @@ Usage
     def your_function():
         another_function()
 
-The above will intercept all calls to ``another_function``. You can specify any
-class, module or a list of them in the argument to ``tracer``.
+The above will intercept all calls to ``another_function``. You can also trace
+classes, modules, generators and more. If you want to trace more objects, pass
+them in a tuple to ``tracer``'s argument.
+
+In time, the effect will be that a window will open with a realtime graphical
+trace of all the calls to the specified objects, along with input and output
+arguments.
+
+I don't know exactly how much I will be able to implement, but it would be
+really nice with slow-motion playback.
 
 Installation
 ------------
@@ -29,8 +37,12 @@ Installation
 
     $ python3 setup.py install [--user]
 
+When this project is mature enough, I will upload it to PyPi so that you just
+have to type ``pip3 install [--user] gazerbeam`` to install it.
+
 Author and license
 ------------------
 
-Copyright 2018 Christian Stigen Larsen  
+Copyright 2018 Christian Stigen Larsen
+
 Distributed under the LGPL v3 or later.
