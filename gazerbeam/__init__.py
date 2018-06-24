@@ -18,7 +18,11 @@ __license__ = "GNU LGPL v3 or later"
 __version__ = "0.0.1"
 
 from gazerbeam.tracer import tracer
+from gazerbeam.logger import Logger
+
+stamp = Logger.stamp
 
 __all__ = [
-    "tracer"
+    "stamp",
+    "tracer",
 ]

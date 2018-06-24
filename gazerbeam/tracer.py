@@ -1,13 +1,13 @@
+import gazerbeam
 import aspectlib
-import vispy
+
 
 @aspectlib.Aspect(bind=True)
 def _trace_call(cutpoint, *args, **kw):
-    name = cutpoint.__name__
-    print("-- %s args=%r kw=%r" % (name, args, kw))
-    result = yield aspectlib.Proceed
-    print("-- %s args=%r kw=%r ==> %r" % (name, args, kw, result))
-    yield aspectlib.Return(result)
+    gazerbeam.stamp(cutpoint, args, kw, None)
+    retval = yield aspectlib.Proceed
+    gazerbeam.stamp(cutpoint, args, kw, retval)
+    yield aspectlib.Return(retval)
 
 
 def tracer(what=None):
