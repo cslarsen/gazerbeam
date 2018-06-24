@@ -10,7 +10,8 @@ class Process(object):
 
         Communicate using ``gazerbeam.ipc.Queue.send``.
         """
-        Process.process = multiprocessing.Process(target=Process._start_viewer)
+        Process.process = multiprocessing.Process(target=Process._start_viewer,
+                                                  daemon=True)
         Process.process.start()
 
     @staticmethod

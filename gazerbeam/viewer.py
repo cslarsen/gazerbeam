@@ -35,6 +35,13 @@ class Canvas(vispy.app.Canvas):
             print("%s: Received object %s (%d objs)" % (name, obj,
                 len(self.received)))
 
+            if obj == "STOP":
+                if hasattr(self, "timer"):
+                    self.timer.stop()
+                gazerbeam.ipc.Queue.queue.close()
+                gazerbeam.ipc.Queue.queue.join_thread()
+                vispy.app.quit()
+
     def on_draw(self, event):
         # Just flash the screen for now
         vispy.gloo.set_clear_color((
@@ -44,7 +51,10 @@ class Canvas(vispy.app.Canvas):
         vispy.gloo.clear(color=True)
 
     def run(self):
-        vispy.app.run()
+        try:
+            vispy.app.run()
+        except KeyboardInterrupt:
+            vispy.app.quit()
 
 
 def start():
