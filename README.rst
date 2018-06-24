@@ -9,16 +9,23 @@ Python program flow. We'll see how that turns out.
 Usage
 -----
 
+.. code:: python
+
     import gazerbeam
 
     # ...
 
+    @gazerbeam.tracer(another_function)
     def your_function():
-        with gazerbeam.trace(what=(mymod1, mymod2)):
-            another_function()
+        another_function()
+
+The above will intercept all calls to ``another_function``. You can specify any
+class, module or a list of them in the argument to ``tracer``.
 
 Installation
 ------------
+
+.. code:: bash
 
     $ python3 setup.py install [--user]
 
